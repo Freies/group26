@@ -38,7 +38,9 @@ When you click the **Render** button a document will be generated that includes 
 ## Sahandyz
 
 ```{r}
-
+# load libraries
+a <- 2 + 2
+a
 ```
 
 ## Tender
