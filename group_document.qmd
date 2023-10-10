@@ -29,9 +29,11 @@ When you click the **Render** button a document will be generated that includes 
 
 ```
 
-## AP president
+## Emilie
 
 ```{r}
+print('Hello')
+
 
 ```
 
