@@ -41,9 +41,13 @@ print(2)
 ## Sahandyz
 
 ```{r}
+<<<<<<< HEAD
+
+=======
 # load libraries
 a <- 2 * 2
 a
+>>>>>>> 6fda134afd4973d09d9633ccb1485570359b9428
 ```
 
 ## Tender
@@ -51,4 +55,5 @@ a
 ```{r}
 # Hello
 # 2nd hello
+3+3+3
 ```
