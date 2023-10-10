@@ -44,6 +44,12 @@ print(2)
 
 ## Emilie
 
+### New feature
+
+```{r}
+3*4+2
+```
+
 ```{r}
 print('Hello')
  
