@@ -39,7 +39,7 @@ When you click the **Render** button a document will be generated that includes 
 
 ```{r}
 # load libraries
-a <- 2 + 2
+a <- 2 * 2
 a
 ```
 
