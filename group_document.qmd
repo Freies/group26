@@ -38,6 +38,7 @@ print(2)
 print('Hello')
  
 x <- 2+2
+s
 ```
 
 ## Sahandyz
