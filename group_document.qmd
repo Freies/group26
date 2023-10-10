@@ -40,7 +40,9 @@ print('Hello')
 ## Sahandyz
 
 ```{r}
-
+# load libraries
+a <- 2 + 2
+a
 ```
 
 ## Tender
