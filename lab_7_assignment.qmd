@@ -13,14 +13,44 @@ Quarto enables you to weave together content and executable code into a finished
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-
+library(tidyverse)
 ```
 
-You can add options to executable code like this
+## Creating folders and loading data
 
 ```{r}
-#| echo: false
-2 * 2
+raw_dir <- "data/_raw/"
+data_file <- "gravier.RData"
+data_loc <- "https://github.com/ramhiser/datamicroarray/raw/master/data/"
+
+if( !dir.exists("data") ){
+  dir.create(path = "data")
+}
+if( !dir.exists(raw_dir) ){
+  dir.create(path = raw_dir)
+}
+if( !file.exists(str_c(raw_dir, data_file)) ){
+  download.file(
+    url = str_c(data_loc, data_file),
+    destfile = str_c(raw_dir, data_file))
+}
+load(file = str_c(raw_dir, data_file))
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Cleaning and augmenting data
+
+```{r}
+gravier_clean <- gravier |>
+  bind_cols() |> 
+  as_tibble()
+
+```
+
+We now change the poor to 1 and good to 0, as well as rename y and
+
+```{r}
+gravier_clean_aug <- gravier_clean |>
+  mutate(y = case_when(y == "poor" ~ 1,
+                       y == "good" ~ 0)) |> 
+  relocate(early_metastasis = y)
+```
