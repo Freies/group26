@@ -21,6 +21,15 @@ When you click the **Render** button a document will be generated that includes 
 "test2"
 ```
 
+##Felix new analysis
+```{r}
+2+2 * 5 / 100
+
+pbinom(50,100,0.5)
+
+```
+
+
 ## José
 
 ```{r}
