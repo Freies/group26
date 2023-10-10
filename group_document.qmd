@@ -41,7 +41,7 @@ print(2)
 
 ```{r}
 # load libraries
-a <- 2 + 2
+a <- 2 * 2
 a
 ```
 
