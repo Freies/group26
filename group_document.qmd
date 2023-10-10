@@ -18,6 +18,7 @@ When you click the **Render** button a document will be generated that includes 
 ```{r}
 "HELLO Guys"
 "test"
+"test2"
 ```
 
 ## José
