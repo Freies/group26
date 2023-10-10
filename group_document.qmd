@@ -22,8 +22,11 @@ When you click the **Render** button a document will be generated that includes 
 ## José
 
 ```{r}
-#| echo: false
-2 * 2
+#helloo
+
+2*2
+
+
 ```
 
 ## AP president
