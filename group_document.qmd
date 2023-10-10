@@ -26,6 +26,8 @@ When you click the **Render** button a document will be generated that includes 
 
 2*2
 
+print(2)
+
 
 ```
 
@@ -38,7 +40,13 @@ When you click the **Render** button a document will be generated that includes 
 ## Sahandyz
 
 ```{r}
+<<<<<<< HEAD
 
+=======
+# load libraries
+a <- 2 * 2
+a
+>>>>>>> 6fda134afd4973d09d9633ccb1485570359b9428
 ```
 
 ## Tender
