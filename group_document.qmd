@@ -40,11 +40,14 @@ print(2)
 ## Sahandyz
 
 ```{r}
-
+# load libraries
+a <- 2 + 2
+a
 ```
 
 ## Tender
 
 ```{r}
-#Hello
+# Hello
+# 2nd hello
 ```
