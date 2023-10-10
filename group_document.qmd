@@ -33,6 +33,16 @@ print(2)
 
 ```
 
+#### New feature
+
+```{r}
+library(tidyverse)
+ggplot(x=c(1,2,3,4), y=c(3,3,3,3))+
+  geom_point()
+# i dont even know how to plot simple plots:(
+
+```
+
 ## Emilie
 
 ```{r}
