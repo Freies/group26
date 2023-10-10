@@ -16,14 +16,17 @@ When you click the **Render** button a document will be generated that includes 
 ## Felix
 
 ```{r}
-1 + 1
+"HELLO Guys"
 ```
 
 ## José
 
 ```{r}
-#| echo: false
-2 * 2
+#helloo
+
+2*2
+
+
 ```
 
 ## AP president
