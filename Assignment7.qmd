@@ -43,7 +43,8 @@ load(file = str_c(raw_dir, data_file))
 # Make dataset tidy
 gravier <- gravier |>
   bind_cols() |>
-  as_tibble() 
+  as_tibble() |> 
+  relocate(Early_metastasis = y)
 
 # Fit the PCA
 pca_fit <- gravier |>  
@@ -54,11 +55,11 @@ pca_fit <- gravier |>
 #Plot PCA
 pca_fit |> 
   augment(gravier) |>  # add original dataset back in
-  ggplot(aes(x = .fittedPC1, y  = .fittedPC2, color = y )) + 
+  ggplot(aes(x = .fittedPC1, y  = .fittedPC2, color = Early_metastasis)) + 
   geom_point() +
   scale_color_manual(
     values = c(good = "#D55E00", poor = "#0072B2")) +
-  labs( title = "PCA plot",
+  labs( title = "PCA plot of Gravier data",
            x = "PCA1",
            y = "PCA2") +
   theme(plot.title = element_text(hjust = 0.5))
@@ -70,31 +71,30 @@ pca_fit |> View()
 str(pca_fit)
 ```
 
-## plot the rotation matrix
+## Plot the rotation matrix
 
 ```{r}
-# Make rotation matrix data tidy
-pca_fit |> 
-  tidy(matrix = "rotation")
 
 # define arrow style for plotting
 arrow_style <- arrow(
   angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
 )
 
-# plot rotation matrix - 
-pca_fit %>%
+# Extract information in rotation matrix and plot it 
+pca_fit |> 
   tidy(matrix = "rotation") |> 
   pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") |> 
   ggplot(aes(PC1, PC2)) +
   geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
   geom_text(
     aes(label = column),
-    hjust = 1, nudge_x = -0.02, 
-    color = "#904C9F"
+    hjust = 1, vjust=1 , nudge_x = 0, 
+    color = "pink"
   ) +
-  xlim(-0.25, .25) + ylim(-.25, 0.25) +
-  coord_fixed()  # fix aspect ratio to 1:1
+  xlim(-0.075, .075) + ylim(-.05, 0.05) +
+  coord_fixed()+  # fix aspect ratio to 1:1
+  theme_minimal()
+ 
 
 ```
 
@@ -102,18 +102,18 @@ pca_fit %>%
 
 ```{r}
 
-#make data tidy
 pca_fit |> 
   tidy(matrix = "eigenvalues")
-
-#plot the percentage variance explained by each PC
-pca_fit %>%
-  tidy(matrix = "eigenvalues") %>%
+#Extract the varience information and plot the percentage variance explained by each PC
+pca_fit |> 
+  tidy(matrix = "eigenvalues") |> 
   ggplot(aes(PC, percent)) +
   geom_col(fill = "#56B4E9", alpha = 0.8) +
-  scale_x_continuous(breaks = 1:9) +
+  scale_x_continuous(breaks= waiver()) +
   scale_y_continuous(
     labels = scales::percent_format(),
     expand = expansion(mult = c(0, 0.01))
   ) 
 ```
+
+So what exactly does all this mean?
