@@ -5,22 +5,18 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Load libraries
 
 ```{r}
 library(tidyverse)
 library(broom)
 ```
 
-You can add options to executable code like this
+## Load data
 
 ```{r}
+
+#| eval: false
 
 raw_dir <- "data/_raw/"
 data_file <- "gravier.RData"
@@ -41,22 +37,19 @@ load(file = str_c(raw_dir, data_file))
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
-
 ### Look at the data in PC coordinates
 
 ```{r}
 # Make dataset tidy
 gravier <- gravier |>
   bind_cols() |>
-  as_tibble()
+  as_tibble() 
 
 # Fit the PCA
 pca_fit <- gravier |>  
   drop_na() |> 
   select(where(is.numeric)) |>  # retain only numeric columns
   prcomp(scale = TRUE) # do PCA on scaled data
-
 
 #Plot PCA
 pca_fit |> 
