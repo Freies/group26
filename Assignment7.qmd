@@ -80,10 +80,20 @@ The Early_metastasis helps to see if there is any separation or clustering of da
 
 
 ```{r}
-gravier |>  View()
+gravier |> View()
 pca_fit |> View()
 str(pca_fit)
 ```
+**sdev** is an important indicator of how much variance in the data each principal component explains.
+
+**rotation** is a numeric matrix that represents the loadings of the original variables on each principal component. The matrix shows the relationships between the 2905 genes and the 168 principal components. High absolute values in the loadings suggest that a variable strongly influences a particular principal component.
+
+**center** is a numeric vector that contains the mean values of the genes. These values represent the centering of the data used in the PCA.
+
+**scale** contains the standard deviation of the genes. These values represent the scaling of the data used in the PCA.
+
+**x** is a numeric matrix that contains the scores of each observation on each principal component. It shows the values of the 168 principal components for each of the 168 observations. These scores represent the data in the transformed principal component space. Principal components are ordered by the amount of variance they explain, with the first component explaining the most variance.
+
 
 ### Plot the rotation matrix
 
