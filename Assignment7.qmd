@@ -8,6 +8,7 @@ editor: visual
 ## Load libraries
 
 ```{r}
+#| label: load-libraries
 library(tidyverse)
 library(broom)
 ```
@@ -15,7 +16,7 @@ library(broom)
 ## Load data
 
 ```{r}
-
+#| label: load-data
 #| eval: false
 
 raw_dir <- "data/_raw/"
@@ -46,6 +47,7 @@ We want to perform PCA, so we want to do these three things to make an analysis:
 ### Look at the data in PC coordinates
 
 ```{r}
+#| label: prep-fit-plot-PCA
 # Make dataset tidy
 gravier <- gravier |>
   bind_cols() |>
@@ -77,11 +79,15 @@ pca_fit |>
 
 This is a visualization of the data in the first two principal component coordinates. These components are linear combinations of the original variables. The plot helps explore how the data points are distributed in a reduced-dimensional space defined by the first two principal components.
 
-The Early_metastasis helps to see if there is any separation or clustering of data points based on early metastasis status. In the previous plot we can't see aparently any separation based on early metastasis, showing that the groups "poor" and "good" have different patterns in the original data.
+The Early_metastasis helps to see if there is any separation or clustering of data points based on early metastasis status. In the previous plot we can't see aparently separation based on early metastasis, showing that the groups "poor" and "good" have different patterns in the original data.
 
 ```{r}
-gravier |> View()
-pca_fit |> View()
+#| label: Data-View
+gravier |> 
+  View()
+pca_fit |> 
+  View()
+
 str(pca_fit)
 ```
 
@@ -98,25 +104,33 @@ str(pca_fit)
 ### Plot the rotation matrix
 
 ```{r}
-
+#| label: data-wrangling
 # define arrow style for plotting
 arrow_style <- arrow(
-  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
+  angle = 20, 
+  ends = "first", 
+  type = "closed", 
+  length = grid::unit(8, "pt")
 )
 
 # Extract information in rotation matrix and plot it 
 pca_fit |> 
   tidy(matrix = "rotation") |> 
-  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") |> 
+  pivot_wider(names_from = "PC", 
+              names_prefix = "PC", 
+              values_from = "value") |> 
   ggplot(aes(PC1, PC2)) +
-  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
+  geom_segment(xend = 0, 
+               yend = 0, 
+               arrow = arrow_style) +
   geom_text(
     aes(label = column),
-    hjust = 1, vjust=1 , nudge_x = 0, 
+    hjust = 1, vjust=1 , 
+    nudge_x = 0, 
     color = "pink"
   ) +
   xlim(-0.075, .075) + ylim(-.05, 0.05) +
-  coord_fixed()+  # fix aspect ratio to 1:1
+  coord_fixed() +  # fix aspect ratio to 1:1
   theme_minimal()
  
 
@@ -133,7 +147,7 @@ The labels on the arrows display the names of the original variables. We can see
 ### Variance explained by each PC
 
 ```{r}
-
+#| label: variance-explained
 pca_fit |> 
   tidy(matrix = "eigenvalues")
 #Extract the varience information and plot the percentage variance explained by each PC
@@ -142,7 +156,7 @@ pca_fit |>
   ggplot(aes(PC, percent)) +
   geom_col(fill = "#56B4E9", 
            alpha = 0.8) +
-  scale_x_continuous(breaks= waiver()) +
+  scale_x_continuous(breaks = waiver()) +
   scale_y_continuous(
     labels = scales::percent_format(),
     expand = expansion(mult = c(0, 0.01))
@@ -150,8 +164,4 @@ pca_fit |>
   theme_minimal()
 ```
 
-So what exactly does all this mean?
-
-```{r}
-# Judith: It seems for me the first (and the others) PCA components captures very poorly (8%) of the variation in the data, so it does not separates well the "poor" samples from the "good" samples. I'm not sure why... 
-```
+What we can see here is that the each of the PC's doesn't explained much of the variance and it therefore, takes many PC's to explain most of the variance.
