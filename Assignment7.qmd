@@ -39,9 +39,9 @@ load(file = str_c(raw_dir, data_file))
 
 We want to perform PCA, so we want to do these three things to make an analysis:
 
-1) Look at the data in PC coordinates.
-2) Look at the rotation matrix.
-3) Look at the variance explained by each PC.
+1)  Look at the data in PC coordinates.
+2)  Look at the rotation matrix.
+3)  Look at the variance explained by each PC.
 
 ### Look at the data in PC coordinates
 
@@ -74,16 +74,17 @@ pca_fit |>
   theme(plot.title = element_text(hjust = 0.5)) +
   theme_minimal()
 ```
+
 This is a visualization of the data in the first two principal component coordinates. These components are linear combinations of the original variables. The plot helps explore how the data points are distributed in a reduced-dimensional space defined by the first two principal components.
 
 The Early_metastasis helps to see if there is any separation or clustering of data points based on early metastasis status. In the previous plot we can't see aparently any separation based on early metastasis, showing that the groups "poor" and "good" have different patterns in the original data.
-
 
 ```{r}
 gravier |> View()
 pca_fit |> View()
 str(pca_fit)
 ```
+
 **sdev** is an important indicator of how much variance in the data each principal component explains.
 
 **rotation** is a numeric matrix that represents the loadings of the original variables on each principal component. The matrix shows the relationships between the 2905 genes and the 168 principal components. High absolute values in the loadings suggest that a variable strongly influences a particular principal component.
@@ -93,7 +94,6 @@ str(pca_fit)
 **scale** contains the standard deviation of the genes. These values represent the scaling of the data used in the PCA.
 
 **x** is a numeric matrix that contains the scores of each observation on each principal component. It shows the values of the 168 principal components for each of the 168 observations. These scores represent the data in the transformed principal component space. Principal components are ordered by the amount of variance they explain, with the first component explaining the most variance.
-
 
 ### Plot the rotation matrix
 
@@ -121,6 +121,7 @@ pca_fit |>
  
 
 ```
+
 The plot visualizes the relationships between the original variables and the first two principal components (PC1 and PC2). These PCs are linear combinations of the original variables and capture the most significant variance in the data.
 
 Each arrow represents the relationship between one original variable and the principal components. The direction of the arrow indicates how the variable influences the PCs.
@@ -128,9 +129,6 @@ Each arrow represents the relationship between one original variable and the pri
 The length and angle of the arrows indicate the strength and direction of the variable's loading on the principal components. Longer arrows suggest a stronger influence on the PC, while the angle shows the direction of the impact.
 
 The labels on the arrows display the names of the original variables. We can see which variables have the most significant influence on PC1 and PC2 based on the lengths and angles of the arrows.
-
-
-
 
 ### Variance explained by each PC
 
@@ -157,4 +155,3 @@ So what exactly does all this mean?
 ```{r}
 # Judith: It seems for me the first (and the others) PCA components captures very poorly (8%) of the variation in the data, so it does not separates well the "poor" samples from the "good" samples. I'm not sure why... 
 ```
-
