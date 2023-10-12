@@ -49,7 +49,7 @@ We want to perform PCA, so we want to do these three things to make an analysis:
 ```{r}
 #| label: prep-fit-plot-PCA
 # Make dataset tidy
-gravier <- gravier |>
+gravier <- gravier |> 
   bind_cols() |>
   as_tibble() |> 
   relocate(Early_metastasis = y)
