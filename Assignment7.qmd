@@ -1,0 +1,157 @@
+---
+title: "Assignment 7"
+author: "Group 26"
+format: html
+editor: visual
+---
+
+## Load libraries
+
+```{r}
+library(tidyverse)
+library(broom)
+```
+
+## Load data
+
+```{r}
+
+#| eval: false
+
+raw_dir <- "data/_raw/"
+data_file <- "gravier.RData"
+data_loc <- "https://github.com/ramhiser/datamicroarray/raw/master/data/"
+
+if( !dir.exists("data") ){
+  dir.create(path = "data")
+}
+if( !dir.exists(raw_dir) ){
+  dir.create(path = raw_dir)
+}
+if( !file.exists(str_c(raw_dir, data_file)) ){
+  download.file(
+    url = str_c(data_loc, data_file),
+    destfile = str_c(raw_dir, data_file))
+}
+load(file = str_c(raw_dir, data_file))
+
+```
+
+We want to perform PCA, so we want to do these three things to make an analysis:
+
+1)  Look at the data in PC coordinates.
+2)  Look at the rotation matrix.
+3)  Look at the variance explained by each PC.
+
+### Look at the data in PC coordinates
+
+```{r}
+# Make dataset tidy
+gravier <- gravier |>
+  bind_cols() |>
+  as_tibble() |> 
+  relocate(Early_metastasis = y)
+
+# Fit the PCA
+pca_fit <- gravier |>  
+  drop_na() |> 
+  select(where(is.numeric)) |>  # retain only numeric columns
+  prcomp(scale = TRUE) # do PCA on scaled data
+
+#Plot PCA
+pca_fit |> 
+  augment(gravier) |>  # add original dataset back in
+  ggplot(aes(x = .fittedPC1, 
+             y  = .fittedPC2, 
+             color = Early_metastasis)) + 
+  geom_point() +
+  scale_color_manual(
+    values = c(good = "#D55E00", 
+               poor = "#0072B2")) +
+  labs( title = "PCA plot of Gravier data",
+           x = "PCA1",
+           y = "PCA2") +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  theme_minimal()
+```
+
+This is a visualization of the data in the first two principal component coordinates. These components are linear combinations of the original variables. The plot helps explore how the data points are distributed in a reduced-dimensional space defined by the first two principal components.
+
+The Early_metastasis helps to see if there is any separation or clustering of data points based on early metastasis status. In the previous plot we can't see aparently any separation based on early metastasis, showing that the groups "poor" and "good" have different patterns in the original data.
+
+```{r}
+gravier |> View()
+pca_fit |> View()
+str(pca_fit)
+```
+
+**sdev** is an important indicator of how much variance in the data each principal component explains.
+
+**rotation** is a numeric matrix that represents the loadings of the original variables on each principal component. The matrix shows the relationships between the 2905 genes and the 168 principal components. High absolute values in the loadings suggest that a variable strongly influences a particular principal component.
+
+**center** is a numeric vector that contains the mean values of the genes. These values represent the centering of the data used in the PCA.
+
+**scale** contains the standard deviation of the genes. These values represent the scaling of the data used in the PCA.
+
+**x** is a numeric matrix that contains the scores of each observation on each principal component. It shows the values of the 168 principal components for each of the 168 observations. These scores represent the data in the transformed principal component space. Principal components are ordered by the amount of variance they explain, with the first component explaining the most variance.
+
+### Plot the rotation matrix
+
+```{r}
+
+# define arrow style for plotting
+arrow_style <- arrow(
+  angle = 20, ends = "first", type = "closed", length = grid::unit(8, "pt")
+)
+
+# Extract information in rotation matrix and plot it 
+pca_fit |> 
+  tidy(matrix = "rotation") |> 
+  pivot_wider(names_from = "PC", names_prefix = "PC", values_from = "value") |> 
+  ggplot(aes(PC1, PC2)) +
+  geom_segment(xend = 0, yend = 0, arrow = arrow_style) +
+  geom_text(
+    aes(label = column),
+    hjust = 1, vjust=1 , nudge_x = 0, 
+    color = "pink"
+  ) +
+  xlim(-0.075, .075) + ylim(-.05, 0.05) +
+  coord_fixed()+  # fix aspect ratio to 1:1
+  theme_minimal()
+ 
+
+```
+
+The plot visualizes the relationships between the original variables and the first two principal components (PC1 and PC2). These PCs are linear combinations of the original variables and capture the most significant variance in the data.
+
+Each arrow represents the relationship between one original variable and the principal components. The direction of the arrow indicates how the variable influences the PCs.
+
+The length and angle of the arrows indicate the strength and direction of the variable's loading on the principal components. Longer arrows suggest a stronger influence on the PC, while the angle shows the direction of the impact.
+
+The labels on the arrows display the names of the original variables. We can see which variables have the most significant influence on PC1 and PC2 based on the lengths and angles of the arrows.
+
+### Variance explained by each PC
+
+```{r}
+
+pca_fit |> 
+  tidy(matrix = "eigenvalues")
+#Extract the varience information and plot the percentage variance explained by each PC
+pca_fit |> 
+  tidy(matrix = "eigenvalues") |> 
+  ggplot(aes(PC, percent)) +
+  geom_col(fill = "#56B4E9", 
+           alpha = 0.8) +
+  scale_x_continuous(breaks= waiver()) +
+  scale_y_continuous(
+    labels = scales::percent_format(),
+    expand = expansion(mult = c(0, 0.01))
+  ) + 
+  theme_minimal()
+```
+
+So what exactly does all this mean?
+
+```{r}
+# Judith: It seems for me the first (and the others) PCA components captures very poorly (8%) of the variation in the data, so it does not separates well the "poor" samples from the "good" samples. I'm not sure why... 
+```
