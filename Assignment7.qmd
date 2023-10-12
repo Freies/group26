@@ -153,3 +153,8 @@ pca_fit |>
 ```
 
 So what exactly does all this mean?
+
+```{r}
+# Judith: It seems for me the first (and the others) PCA components captures very poorly (8%) of the variation in the data, so it does not separates well the "poor" samples from the "good" samples. I'm not sure why... 
+```
+
