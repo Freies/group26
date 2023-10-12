@@ -121,6 +121,16 @@ pca_fit |>
  
 
 ```
+The plot visualizes the relationships between the original variables and the first two principal components (PC1 and PC2). These PCs are linear combinations of the original variables and capture the most significant variance in the data.
+
+Each arrow represents the relationship between one original variable and the principal components. The direction of the arrow indicates how the variable influences the PCs.
+
+The length and angle of the arrows indicate the strength and direction of the variable's loading on the principal components. Longer arrows suggest a stronger influence on the PC, while the angle shows the direction of the impact.
+
+The labels on the arrows display the names of the original variables. We can see which variables have the most significant influence on PC1 and PC2 based on the lengths and angles of the arrows.
+
+
+
 
 ### Variance explained by each PC
 
