@@ -57,7 +57,7 @@ We want to perform PCA, so we want to do these three things to make an analysis:
 #| label: prep-fit-plot-PCA
 
 # Make dataset tidy
-gravier <- gravier |>
+gravier <- gravier |> 
   bind_cols() |>
   as_tibble() |> 
   relocate(Early_metastasis = y)
@@ -197,7 +197,7 @@ pca_fit |>
   scale_x_continuous(breaks = waiver()) +
   scale_y_continuous(
     labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
+    expand = expansion(mult = c(0, 0.01)) 
   ) + 
   theme_minimal()
 ```
