@@ -159,7 +159,7 @@ pca_fit |>
   scale_x_continuous(breaks = waiver()) +
   scale_y_continuous(
     labels = scales::percent_format(),
-    expand = expansion(mult = c(0, 0.01))
+    expand = expansion(mult = c(0, 0.01)) 
   ) + 
   theme_minimal()
 ```
