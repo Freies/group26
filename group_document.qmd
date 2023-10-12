@@ -21,6 +21,15 @@ When you click the **Render** button a document will be generated that includes 
 "test2"
 ```
 
+##Felix new analysis
+```{r}
+2+2 * 5 / 100
+
+pbinom(50,100,0.5)
+
+```
+
+
 ## José
 
 ```{r}
@@ -33,7 +42,24 @@ print(2)
 
 ```
 
+#### New feature
+
+```{r}
+library(tidyverse)
+ggplot(x=c(1,2,3,4), y=c(3,3,3,3))+
+  geom_point()
+# i dont even know how to plot simple plots:(
+
+
+```
+
 ## Emilie
+
+### New feature
+
+```{r}
+3*4+2
+```
 
 ```{r}
 print('Hello')
@@ -71,3 +97,12 @@ a
 # 2nd hello
 3+3+3
 ```
+
+### New analysis
+
+Hi I'm doing the new branch
+```{r}
+# Hello
+3+3+3
+```
+
